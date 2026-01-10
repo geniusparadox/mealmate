@@ -272,12 +272,12 @@ export function filterRecipesWithCriteria(
 
 /**
  * Filter recipes based on available ingredients
- * Returns recipes where at least a threshold of required ingredients are available
+ * Returns recipes where at least one ingredient matches (or threshold percentage)
  */
 export function filterByAvailableIngredients(
   recipes: Recipe[],
   availableIngredients: string[],
-  threshold: number = 0.5 // At least 50% of ingredients must match
+  threshold: number = 0.05 // At least 1 ingredient must match (5% = 1 in 20)
 ): Recipe[] {
   if (availableIngredients.length === 0) {
     return recipes;
@@ -288,51 +288,56 @@ export function filterByAvailableIngredients(
     i.toLowerCase().trim()
   );
 
-  return recipes.filter((recipe) => {
-    // Get required (non-optional) ingredients
-    const requiredIngredients = recipe.ingredients.filter(
-      (ing) => !ing.isOptional
-    );
+  // Get all variations for each available ingredient upfront
+  const allVariations = normalizedAvailable.flatMap((ing) =>
+    getIngredientVariations(ing)
+  );
 
-    if (requiredIngredients.length === 0) {
-      return true;
-    }
+  const matchedRecipes = recipes
+    .map((recipe) => {
+      // Check ALL ingredients (not just required) for better matching
+      const allIngredients = recipe.ingredients;
 
-    // Count how many ingredients match
-    let matchCount = 0;
-    for (const ingredient of requiredIngredients) {
-      const ingredientName = ingredient.name.toLowerCase().trim();
-
-      // Check if any available ingredient matches
-      const hasMatch = normalizedAvailable.some((available) => {
-        // Exact match
-        if (ingredientName === available) return true;
-
-        // Partial match (ingredient contains available or vice versa)
-        if (
-          ingredientName.includes(available) ||
-          available.includes(ingredientName)
-        ) {
-          return true;
-        }
-
-        // Handle common variations
-        const variations = getIngredientVariations(available);
-        return variations.some(
-          (v) => ingredientName.includes(v) || v.includes(ingredientName)
-        );
-      });
-
-      if (hasMatch) {
-        matchCount++;
+      if (allIngredients.length === 0) {
+        return { recipe, matchCount: 0, totalIngredients: 0 };
       }
-    }
 
-    // Calculate match percentage
-    const matchPercentage = matchCount / requiredIngredients.length;
+      // Count how many ingredients match
+      let matchCount = 0;
+      for (const ingredient of allIngredients) {
+        const ingredientName = ingredient.name.toLowerCase().trim();
 
-    return matchPercentage >= threshold;
-  });
+        // Check if any available ingredient or variation matches
+        const hasMatch = normalizedAvailable.some((available) => {
+          // Exact match
+          if (ingredientName === available) return true;
+
+          // Partial match (ingredient contains available or vice versa)
+          if (ingredientName.includes(available) || available.includes(ingredientName)) {
+            return true;
+          }
+
+          return false;
+        }) || allVariations.some((variation) => {
+          // Check variations
+          return ingredientName.includes(variation) || variation.includes(ingredientName);
+        });
+
+        if (hasMatch) {
+          matchCount++;
+        }
+      }
+
+      return { recipe, matchCount, totalIngredients: allIngredients.length };
+    })
+    .filter(({ matchCount }) => matchCount > 0) // At least 1 match
+    .sort((a, b) => {
+      // Sort by match count (more matches first)
+      return b.matchCount - a.matchCount;
+    })
+    .map(({ recipe }) => recipe);
+
+  return matchedRecipes;
 }
 
 /**
@@ -344,27 +349,38 @@ function getIngredientVariations(ingredient: string): string[] {
 
   // Common mappings
   const mappings: Record<string, string[]> = {
-    chicken: ["chicken breast", "chicken thigh", "chicken wings", "poultry"],
-    potato: ["potatoes", "aloo"],
-    tomato: ["tomatoes", "tamatar"],
-    onion: ["onions", "pyaaz"],
-    garlic: ["lahsun"],
+    chicken: ["chicken breast", "chicken thigh", "chicken wings", "poultry", "chicken pieces"],
+    potato: ["potatoes", "aloo", "potato"],
+    tomato: ["tomatoes", "tamatar", "tomato"],
+    onion: ["onions", "pyaaz", "onion"],
+    garlic: ["lahsun", "garlic cloves"],
     ginger: ["adrak"],
     paneer: ["cottage cheese", "indian cheese"],
-    curd: ["yogurt", "dahi", "yoghurt"],
-    rice: ["basmati", "chawal"],
-    spinach: ["palak"],
+    curd: ["yogurt", "dahi", "yoghurt", "curd"],
+    rice: ["basmati", "chawal", "basmati rice"],
+    spinach: ["palak", "spinach leaves"],
+    beans: ["green beans", "french beans", "string beans", "rajma", "kidney beans", "mixed vegetables"],
+    carrot: ["carrots", "gajar"],
+    peas: ["green peas", "matar", "frozen peas"],
+    capsicum: ["bell pepper", "shimla mirch", "green pepper", "red pepper"],
+    cabbage: ["patta gobhi"],
+    cauliflower: ["gobi", "phool gobhi"],
+    corn: ["sweet corn", "makai", "baby corn"],
+    mushroom: ["mushrooms", "button mushroom"],
     "methi (fenugreek)": ["methi", "fenugreek", "methi leaves"],
     "bottle gourd (lauki)": ["lauki", "bottle gourd", "dudhi"],
     "brinjal (eggplant)": ["brinjal", "eggplant", "baingan", "aubergine"],
     "okra (ladies finger)": ["okra", "ladies finger", "bhindi"],
     "bitter gourd": ["karela"],
-    eggs: ["egg"],
-    fish: ["pomfret", "salmon", "tuna", "mackerel", "rohu"],
-    prawns: ["shrimp", "jhinga"],
-    mutton: ["lamb", "goat meat"],
-    dal: ["toor dal", "chana dal", "moong dal", "urad dal", "masoor dal", "lentils"],
-    flour: ["wheat flour", "atta", "maida"],
+    egg: ["eggs", "egg"],
+    fish: ["pomfret", "salmon", "tuna", "mackerel", "rohu", "fish fillet"],
+    prawns: ["shrimp", "jhinga", "prawn"],
+    mutton: ["lamb", "goat meat", "goat"],
+    dal: ["toor dal", "chana dal", "moong dal", "urad dal", "masoor dal", "lentils", "daal"],
+    flour: ["wheat flour", "atta", "maida", "all-purpose flour"],
+    noodles: ["hakka noodles", "chow mein", "instant noodles"],
+    tofu: ["bean curd", "soy paneer"],
+    soy: ["soy sauce", "soya"],
   };
 
   // Add mapped variations

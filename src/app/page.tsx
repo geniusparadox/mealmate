@@ -64,7 +64,8 @@ export default function HomePage() {
     if (!filterByIngredients || availableIngredients.length === 0) {
       return baseFilteredRecipes;
     }
-    return filterByAvailableIngredients(baseFilteredRecipes, availableIngredients, 0.3);
+    // Use 0.05 threshold - shows recipes with at least 1 matching ingredient
+    return filterByAvailableIngredients(baseFilteredRecipes, availableIngredients, 0.05);
   }, [baseFilteredRecipes, filterByIngredients, availableIngredients]);
 
   // Use ingredient filtered if it has results, otherwise fall back to base
