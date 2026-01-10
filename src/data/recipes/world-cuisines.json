@@ -1,0 +1,280 @@
+{
+  "recipes": [
+    {
+      "id": "pasta-aglio-olio",
+      "name": "Pasta Aglio e Olio",
+      "nameLocal": "Pasta Aglio e Olio",
+      "description": "Simple Italian pasta with garlic, olive oil, and chili flakes. Minimalist perfection.",
+      "cuisine": "italian",
+      "mealType": ["lunch", "dinner"],
+      "dietType": "veg",
+      "prepTime": 5,
+      "cookTime": 15,
+      "difficulty": "easy",
+      "servings": 4,
+      "ingredients": [
+        { "name": "Spaghetti", "quantity": "400", "unit": "grams", "category": "grain" },
+        { "name": "Garlic", "quantity": "8", "unit": "cloves", "category": "vegetable" },
+        { "name": "Extra virgin olive oil", "quantity": "0.5", "unit": "cup", "category": "oil" },
+        { "name": "Red chili flakes", "quantity": "1", "unit": "tsp", "category": "spice" },
+        { "name": "Fresh parsley", "quantity": "0.25", "unit": "cup", "category": "spice" },
+        { "name": "Parmesan", "quantity": "0.25", "unit": "cup", "category": "dairy", "isOptional": true },
+        { "name": "Salt", "quantity": "to taste", "unit": "", "category": "spice" }
+      ],
+      "steps": [
+        { "stepNumber": 1, "instruction": "Cook pasta in salted boiling water until al dente. Reserve 1 cup pasta water.", "duration": 10 },
+        { "stepNumber": 2, "instruction": "While pasta cooks, slice garlic thinly.", "duration": 2 },
+        { "stepNumber": 3, "instruction": "Heat olive oil over medium-low. Add garlic and cook until golden (not brown).", "duration": 4 },
+        { "stepNumber": 4, "instruction": "Add chili flakes and remove from heat.", "duration": 1 },
+        { "stepNumber": 5, "instruction": "Drain pasta and add to the pan. Toss with reserved pasta water.", "duration": 2 },
+        { "stepNumber": 6, "instruction": "Add parsley and parmesan. Toss and serve immediately.", "duration": 1 }
+      ],
+      "tips": [
+        "Don't burn the garlic",
+        "Pasta water helps emulsify the sauce",
+        "Use good quality olive oil"
+      ],
+      "nutrition": {
+        "calories": 480,
+        "protein": 12,
+        "carbohydrates": 65,
+        "fat": 20,
+        "fiber": 3,
+        "sugar": 2,
+        "sodium": 320,
+        "vitamins": { "vitaminC": 10, "vitaminE": 15 },
+        "minerals": { "iron": 12 }
+      },
+      "tags": ["simple", "quick", "italian-classic", "vegetarian"],
+      "spiceLevel": 2,
+      "isQuickMeal": true,
+      "isMealPrep": false,
+      "isOnePot": true,
+      "serveWith": ["Garlic bread", "Salad"]
+    },
+    {
+      "id": "margherita-pizza",
+      "name": "Margherita Pizza",
+      "nameLocal": "Pizza Margherita",
+      "description": "Classic Italian pizza with tomato, mozzarella, and basil. Simple and perfect.",
+      "cuisine": "italian",
+      "mealType": ["lunch", "dinner"],
+      "dietType": "veg",
+      "prepTime": 90,
+      "cookTime": 15,
+      "difficulty": "medium",
+      "servings": 4,
+      "ingredients": [
+        { "name": "Pizza flour (00)", "quantity": "500", "unit": "grams", "category": "grain" },
+        { "name": "Yeast", "quantity": "7", "unit": "grams", "category": "other" },
+        { "name": "Water", "quantity": "325", "unit": "ml", "category": "other" },
+        { "name": "San Marzano tomatoes", "quantity": "400", "unit": "grams", "category": "vegetable" },
+        { "name": "Fresh mozzarella", "quantity": "300", "unit": "grams", "category": "dairy" },
+        { "name": "Fresh basil", "quantity": "1", "unit": "bunch", "category": "spice" },
+        { "name": "Extra virgin olive oil", "quantity": "2", "unit": "tbsp", "category": "oil" },
+        { "name": "Salt", "quantity": "10", "unit": "grams", "category": "spice" }
+      ],
+      "steps": [
+        { "stepNumber": 1, "instruction": "Mix flour, water, yeast, and salt. Knead for 10 minutes until smooth.", "duration": 15 },
+        { "stepNumber": 2, "instruction": "Let dough rise for 1-2 hours until doubled.", "duration": 60 },
+        { "stepNumber": 3, "instruction": "Crush tomatoes with salt for sauce.", "duration": 3 },
+        { "stepNumber": 4, "instruction": "Preheat oven to highest setting (250°C+) with pizza stone if available.", "duration": 30 },
+        { "stepNumber": 5, "instruction": "Stretch dough, add sauce and torn mozzarella.", "duration": 5 },
+        { "stepNumber": 6, "instruction": "Bake until crust is charred and cheese melted. Add basil and drizzle oil.", "duration": 12 }
+      ],
+      "tips": [
+        "High heat is crucial",
+        "Don't overload with toppings",
+        "Add basil after baking"
+      ],
+      "nutrition": {
+        "calories": 380,
+        "protein": 16,
+        "carbohydrates": 52,
+        "fat": 12,
+        "fiber": 3,
+        "sugar": 4,
+        "sodium": 680,
+        "cholesterol": 35,
+        "vitamins": { "vitaminC": 15, "vitaminA": 20 },
+        "minerals": { "calcium": 25, "iron": 15 }
+      },
+      "tags": ["classic", "italian", "crowd-pleaser", "baked"],
+      "spiceLevel": 1,
+      "isQuickMeal": false,
+      "isMealPrep": false,
+      "isOnePot": false,
+      "isKidFriendly": true,
+      "isPartyDish": true,
+      "serveWith": ["Salad", "Olive oil for dipping"]
+    },
+    {
+      "id": "tacos",
+      "name": "Chicken Tacos",
+      "nameLocal": "Tacos de Pollo",
+      "description": "Mexican street-style tacos with seasoned chicken and fresh toppings.",
+      "cuisine": "mexican",
+      "mealType": ["lunch", "dinner"],
+      "dietType": "non-veg",
+      "prepTime": 20,
+      "cookTime": 15,
+      "difficulty": "easy",
+      "servings": 4,
+      "ingredients": [
+        { "name": "Chicken thighs", "quantity": "500", "unit": "grams", "category": "protein" },
+        { "name": "Small corn tortillas", "quantity": "12", "unit": "pieces", "category": "grain" },
+        { "name": "Onion", "quantity": "1", "unit": "medium", "category": "vegetable" },
+        { "name": "Cilantro", "quantity": "0.5", "unit": "cup", "category": "spice" },
+        { "name": "Lime", "quantity": "2", "unit": "pieces", "category": "other" },
+        { "name": "Cumin", "quantity": "1", "unit": "tsp", "category": "spice" },
+        { "name": "Chili powder", "quantity": "1", "unit": "tbsp", "category": "spice" },
+        { "name": "Garlic powder", "quantity": "1", "unit": "tsp", "category": "spice" },
+        { "name": "Salsa verde", "quantity": "0.5", "unit": "cup", "category": "condiment" },
+        { "name": "Salt", "quantity": "to taste", "unit": "", "category": "spice" },
+        { "name": "Oil", "quantity": "2", "unit": "tbsp", "category": "oil" }
+      ],
+      "steps": [
+        { "stepNumber": 1, "instruction": "Season chicken with cumin, chili powder, garlic powder, and salt.", "duration": 5 },
+        { "stepNumber": 2, "instruction": "Grill or pan-fry chicken until cooked through. Rest and slice or shred.", "duration": 12 },
+        { "stepNumber": 3, "instruction": "Dice onion and chop cilantro. Cut limes into wedges.", "duration": 5 },
+        { "stepNumber": 4, "instruction": "Warm tortillas on a dry pan or directly over flame.", "duration": 3 },
+        { "stepNumber": 5, "instruction": "Fill tortillas with chicken, onion, and cilantro.", "duration": 3 },
+        { "stepNumber": 6, "instruction": "Serve with salsa verde and lime wedges.", "duration": 1 }
+      ],
+      "tips": [
+        "Char tortillas slightly for authentic taste",
+        "Use thighs for juicier meat",
+        "Serve immediately"
+      ],
+      "nutrition": {
+        "calories": 380,
+        "protein": 30,
+        "carbohydrates": 35,
+        "fat": 14,
+        "fiber": 5,
+        "sugar": 3,
+        "sodium": 520,
+        "cholesterol": 95,
+        "vitamins": { "vitaminC": 20, "vitaminB6": 35 },
+        "minerals": { "iron": 15, "zinc": 20 }
+      },
+      "tags": ["street-food", "quick", "customizable", "party"],
+      "spiceLevel": 2,
+      "isQuickMeal": true,
+      "isMealPrep": false,
+      "isOnePot": false,
+      "isPartyDish": true,
+      "serveWith": ["Salsa", "Guacamole", "Lime"]
+    },
+    {
+      "id": "hummus",
+      "name": "Hummus",
+      "description": "Creamy Middle Eastern chickpea dip. Perfect with pita bread.",
+      "cuisine": "middle-eastern",
+      "mealType": ["snack", "lunch"],
+      "dietType": "veg",
+      "prepTime": 15,
+      "cookTime": 0,
+      "difficulty": "easy",
+      "servings": 6,
+      "ingredients": [
+        { "name": "Chickpeas", "quantity": "400", "unit": "grams", "category": "legume" },
+        { "name": "Tahini", "quantity": "0.25", "unit": "cup", "category": "condiment" },
+        { "name": "Lemon juice", "quantity": "3", "unit": "tbsp", "category": "other" },
+        { "name": "Garlic", "quantity": "2", "unit": "cloves", "category": "vegetable" },
+        { "name": "Cumin", "quantity": "0.5", "unit": "tsp", "category": "spice" },
+        { "name": "Extra virgin olive oil", "quantity": "3", "unit": "tbsp", "category": "oil" },
+        { "name": "Paprika", "quantity": "for garnish", "unit": "", "category": "spice" },
+        { "name": "Salt", "quantity": "to taste", "unit": "", "category": "spice" },
+        { "name": "Ice water", "quantity": "2-4", "unit": "tbsp", "category": "other" }
+      ],
+      "steps": [
+        { "stepNumber": 1, "instruction": "If using dried chickpeas, soak overnight and cook until very soft.", "duration": 5 },
+        { "stepNumber": 2, "instruction": "Blend tahini and lemon juice for 1 minute until light and creamy.", "duration": 2 },
+        { "stepNumber": 3, "instruction": "Add garlic, cumin, and salt. Blend for 30 seconds.", "duration": 1 },
+        { "stepNumber": 4, "instruction": "Add chickpeas and blend for 2 minutes until very smooth.", "duration": 3 },
+        { "stepNumber": 5, "instruction": "With blender running, add ice water until desired consistency.", "duration": 1 },
+        { "stepNumber": 6, "instruction": "Serve drizzled with olive oil and paprika.", "duration": 2 }
+      ],
+      "tips": [
+        "Very soft chickpeas are key to smooth hummus",
+        "Blend tahini first for creaminess",
+        "Ice water makes it fluffy"
+      ],
+      "nutrition": {
+        "calories": 180,
+        "protein": 7,
+        "carbohydrates": 18,
+        "fat": 10,
+        "fiber": 5,
+        "sugar": 2,
+        "sodium": 280,
+        "vitamins": { "vitaminC": 6 },
+        "minerals": { "iron": 15, "zinc": 10 }
+      },
+      "tags": ["dip", "healthy", "protein-rich", "no-cook"],
+      "spiceLevel": 1,
+      "isQuickMeal": true,
+      "isMealPrep": true,
+      "isOnePot": true,
+      "isKidFriendly": true,
+      "serveWith": ["Pita bread", "Vegetables", "Falafel"]
+    },
+    {
+      "id": "greek-salad",
+      "name": "Greek Salad",
+      "nameLocal": "Χωριάτικη Σαλάτα",
+      "description": "Fresh Mediterranean salad with tomatoes, cucumber, feta, and olives.",
+      "cuisine": "mediterranean",
+      "mealType": ["lunch", "dinner"],
+      "dietType": "veg",
+      "prepTime": 15,
+      "cookTime": 0,
+      "difficulty": "easy",
+      "servings": 4,
+      "ingredients": [
+        { "name": "Tomatoes", "quantity": "4", "unit": "medium", "category": "vegetable" },
+        { "name": "Cucumber", "quantity": "1", "unit": "large", "category": "vegetable" },
+        { "name": "Red onion", "quantity": "1", "unit": "small", "category": "vegetable" },
+        { "name": "Green bell pepper", "quantity": "1", "unit": "medium", "category": "vegetable" },
+        { "name": "Feta cheese", "quantity": "200", "unit": "grams", "category": "dairy" },
+        { "name": "Kalamata olives", "quantity": "0.5", "unit": "cup", "category": "vegetable" },
+        { "name": "Olive oil", "quantity": "4", "unit": "tbsp", "category": "oil" },
+        { "name": "Dried oregano", "quantity": "1", "unit": "tsp", "category": "spice" },
+        { "name": "Red wine vinegar", "quantity": "1", "unit": "tbsp", "category": "other" },
+        { "name": "Salt", "quantity": "to taste", "unit": "", "category": "spice" }
+      ],
+      "steps": [
+        { "stepNumber": 1, "instruction": "Cut tomatoes into wedges. Slice cucumber into half moons.", "duration": 5 },
+        { "stepNumber": 2, "instruction": "Thinly slice red onion. Cut pepper into rings.", "duration": 3 },
+        { "stepNumber": 3, "instruction": "Combine vegetables in a bowl.", "duration": 2 },
+        { "stepNumber": 4, "instruction": "Add olives and place feta block on top.", "duration": 1 },
+        { "stepNumber": 5, "instruction": "Drizzle with olive oil and vinegar.", "duration": 1 },
+        { "stepNumber": 6, "instruction": "Sprinkle oregano and salt. Serve immediately.", "duration": 1 }
+      ],
+      "tips": [
+        "Use ripe, quality tomatoes",
+        "Don't crumble the feta - slice it",
+        "Dress just before serving"
+      ],
+      "nutrition": {
+        "calories": 280,
+        "protein": 10,
+        "carbohydrates": 12,
+        "fat": 23,
+        "fiber": 3,
+        "sugar": 6,
+        "sodium": 680,
+        "cholesterol": 45,
+        "vitamins": { "vitaminC": 60, "vitaminA": 35, "vitaminK": 25 },
+        "minerals": { "calcium": 25, "iron": 8 }
+      },
+      "tags": ["fresh", "healthy", "no-cook", "summer"],
+      "spiceLevel": 1,
+      "isQuickMeal": true,
+      "isMealPrep": false,
+      "isOnePot": true,
+      "serveWith": ["Pita bread", "Grilled meat"]
+    }
+  ]
+}
