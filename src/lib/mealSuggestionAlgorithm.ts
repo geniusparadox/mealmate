@@ -119,15 +119,16 @@ function filterRecipes(
 ): Recipe[] {
   return recipes.filter((recipe) => {
     // Diet type is a hard constraint
-    if (context.dietType && context.dietType !== "non-veg") {
+    if (context.dietType) {
       if (context.dietType === "veg" && recipe.dietType !== "veg") {
         return false;
       }
-      if (
-        context.dietType === "egg" &&
-        recipe.dietType !== "veg" &&
-        recipe.dietType !== "egg"
-      ) {
+      if (context.dietType === "egg" && recipe.dietType !== "veg" && recipe.dietType !== "egg") {
+        // Eggetarian: show veg and egg recipes only
+        return false;
+      }
+      if (context.dietType === "non-veg" && recipe.dietType !== "non-veg") {
+        // Non-veg: show only non-veg recipes (meat/fish)
         return false;
       }
     }
@@ -220,15 +221,13 @@ export function filterRecipesWithCriteria(
       if (criteria.dietType === "veg" && recipe.dietType !== "veg") {
         return false;
       }
-      if (
-        criteria.dietType === "egg" &&
-        recipe.dietType !== "veg" &&
-        recipe.dietType !== "egg"
-      ) {
+      if (criteria.dietType === "egg" && recipe.dietType !== "veg" && recipe.dietType !== "egg") {
+        // Eggetarian: show veg and egg recipes only
         return false;
       }
-      if (criteria.dietType === "non-veg" && recipe.dietType === "veg") {
-        // Non-veg filter should show all, so no filter here
+      if (criteria.dietType === "non-veg" && recipe.dietType !== "non-veg") {
+        // Non-veg: show only non-veg recipes (meat/fish)
+        return false;
       }
     }
 
