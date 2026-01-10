@@ -347,40 +347,84 @@ function getIngredientVariations(ingredient: string): string[] {
   const variations: string[] = [ingredient];
   const lower = ingredient.toLowerCase();
 
-  // Common mappings
+  // Common mappings with regional Indian language variations
+  // Includes: Hindi, Kannada, Tamil, Telugu, Malayalam transliterations
   const mappings: Record<string, string[]> = {
-    chicken: ["chicken breast", "chicken thigh", "chicken wings", "poultry", "chicken pieces"],
-    potato: ["potatoes", "aloo", "potato"],
-    tomato: ["tomatoes", "tamatar", "tomato"],
-    onion: ["onions", "pyaaz", "onion"],
-    garlic: ["lahsun", "garlic cloves"],
-    ginger: ["adrak"],
-    paneer: ["cottage cheese", "indian cheese"],
-    curd: ["yogurt", "dahi", "yoghurt", "curd"],
-    rice: ["basmati", "chawal", "basmati rice"],
-    spinach: ["palak", "spinach leaves"],
-    beans: ["green beans", "french beans", "string beans", "rajma", "kidney beans", "mixed vegetables"],
-    carrot: ["carrots", "gajar"],
-    peas: ["green peas", "matar", "frozen peas"],
-    capsicum: ["bell pepper", "shimla mirch", "green pepper", "red pepper"],
-    cabbage: ["patta gobhi"],
-    cauliflower: ["gobi", "phool gobhi"],
-    corn: ["sweet corn", "makai", "baby corn"],
-    mushroom: ["mushrooms", "button mushroom"],
-    "methi (fenugreek)": ["methi", "fenugreek", "methi leaves"],
-    "bottle gourd (lauki)": ["lauki", "bottle gourd", "dudhi"],
-    "brinjal (eggplant)": ["brinjal", "eggplant", "baingan", "aubergine"],
-    "okra (ladies finger)": ["okra", "ladies finger", "bhindi"],
-    "bitter gourd": ["karela"],
-    egg: ["eggs", "egg"],
-    fish: ["pomfret", "salmon", "tuna", "mackerel", "rohu", "fish fillet"],
-    prawns: ["shrimp", "jhinga", "prawn"],
-    mutton: ["lamb", "goat meat", "goat"],
-    dal: ["toor dal", "chana dal", "moong dal", "urad dal", "masoor dal", "lentils", "daal"],
-    flour: ["wheat flour", "atta", "maida", "all-purpose flour"],
-    noodles: ["hakka noodles", "chow mein", "instant noodles"],
+    // Proteins
+    chicken: ["chicken breast", "chicken thigh", "chicken wings", "poultry", "chicken pieces",
+      "murgh", "kozhi", "koli", "kodi", "murg"],  // Hindi, Tamil, Kannada, Telugu
+    mutton: ["lamb", "goat meat", "goat", "gosht", "aatu", "meka", "attirachi", "keema"],
+    fish: ["pomfret", "salmon", "tuna", "mackerel", "rohu", "fish fillet",
+      "machli", "meen", "meenu", "chepa", "matsya"],  // Hindi, Tamil, Kannada, Telugu, Sanskrit
+    prawns: ["shrimp", "jhinga", "prawn", "eral", "sungat", "royyalu", "chemmeen", "konju"],
+    egg: ["eggs", "egg", "anda", "motte", "muttai", "guddu", "mutta"],
+    paneer: ["cottage cheese", "indian cheese", "tofu"],
+
+    // Vegetables
+    potato: ["potatoes", "aloo", "potato", "batata", "urulaikilangu", "alugadde", "bangaladumpa", "urulakizhangu"],
+    tomato: ["tomatoes", "tamatar", "tomato", "thakkali", "tomato hannu", "tamata"],
+    onion: ["onions", "pyaaz", "onion", "vengayam", "eerulli", "ullipaya", "savala", "ulli"],
+    garlic: ["lahsun", "garlic cloves", "poondu", "bellulli", "vellulli", "veluthulli"],
+    ginger: ["adrak", "inji", "shunti", "allam", "inchi"],
+    spinach: ["palak", "spinach leaves", "keerai", "soppu", "pasalakeerai", "cheera"],
+    beans: ["green beans", "french beans", "string beans", "rajma", "kidney beans", "mixed vegetables",
+      "hurali", "avare", "beans kayi"],
+    carrot: ["carrots", "gajar", "carrot", "gajjari", "gajjar"],
+    peas: ["green peas", "matar", "frozen peas", "pattani", "batani"],
+    capsicum: ["bell pepper", "shimla mirch", "green pepper", "red pepper", "donne menasu"],
+    cabbage: ["patta gobhi", "kosu", "muttaikose", "gose"],
+    cauliflower: ["gobi", "phool gobhi", "hookosu", "cauliflower"],
+    corn: ["sweet corn", "makai", "baby corn", "makka", "cholam", "jola"],
+    mushroom: ["mushrooms", "button mushroom", "anabe", "koon", "kaalan"],
+    brinjal: ["eggplant", "baingan", "aubergine", "badane", "kathirikai", "vankaya", "vazhuthananga"],
+    okra: ["ladies finger", "bhindi", "vendakkai", "bendekai", "bende", "bendekaayi"],
+    drumstick: ["moringa", "nugge", "murungai", "munaga"],
+    "bottle gourd": ["lauki", "dudhi", "sorakaya", "sorekai", "churakka"],
+    "bitter gourd": ["karela", "hagalakai", "pavakkai", "kakarakaya", "pavakka"],
+    "ridge gourd": ["turai", "heerekai", "peerkankai", "beerakaya"],
+    pumpkin: ["kaddu", "kumbalakai", "poosanikai", "gummadikaya", "mathanga"],
+    coconut: ["nariyal", "kobbari", "tengai", "thenkai", "thenga"],
+    curry leaves: ["kadi patta", "karibevu", "karuveppilai", "karivepaku", "karivembu"],
+    coriander: ["dhania", "kothamalli", "kothambari", "kottimira", "malli"],
+    mint: ["pudina", "pudina ele"],
+
+    // Grains & Lentils
+    rice: ["basmati", "chawal", "basmati rice", "akki", "arisi", "biyyam", "ari"],
+    dal: ["toor dal", "chana dal", "moong dal", "urad dal", "masoor dal", "lentils", "daal",
+      "bele", "paruppu", "pappu"],
+    wheat: ["gehun", "godhi", "godhuma"],
+    flour: ["wheat flour", "atta", "maida", "all-purpose flour", "hittu", "maavu"],
+    ragi: ["finger millet", "nachni", "kelvaragu", "ragulu"],
+    jowar: ["sorghum", "jola", "cholam"],
+
+    // Dairy
+    curd: ["yogurt", "dahi", "yoghurt", "mosaru", "thayir", "perugu", "thayiru"],
+    milk: ["doodh", "halu", "paal", "paalu"],
+    ghee: ["clarified butter", "tuppa", "nei", "neyyi"],
+    butter: ["makhan", "benne", "venna"],
+    buttermilk: ["chaas", "majjige", "mor", "majjiga", "moru"],
+
+    // Spices
+    turmeric: ["haldi", "arishina", "manjal", "pasupu", "manjal podi"],
+    chili: ["mirchi", "menasu", "milagai", "mirapa", "mulaku", "green chili", "red chili"],
+    cumin: ["jeera", "jeerige", "seeragam", "jilakara", "jeerakam"],
+    mustard: ["rai", "sarson", "sasive", "kadugu", "avalu"],
+    cinnamon: ["dalchini", "chakke", "pattai", "dalchina"],
+    cardamom: ["elaichi", "elakki", "elakkai", "yelakulu"],
+    cloves: ["laung", "lavanga", "krambu", "lavangam"],
+    pepper: ["kali mirch", "menasu", "milagu", "miriyalu"],
+    tamarind: ["imli", "hunase", "puli", "chintapandu", "valanpuli"],
+    jaggery: ["gur", "gud", "bella", "vellam", "bellam", "sharkara"],
+
+    // Others
+    noodles: ["hakka noodles", "chow mein", "instant noodles", "sevai"],
     tofu: ["bean curd", "soy paneer"],
     soy: ["soy sauce", "soya"],
+    oil: ["yenne", "yennai", "nune", "enna", "tel"],
+    salt: ["uppu", "noon", "namak"],
+    sugar: ["sakkare", "sakkarai", "chekkara", "chini"],
+    water: ["neeru", "neer", "tanni", "paani"],
+    lemon: ["nimbu", "nimbe", "elumichai", "nimmakaya"],
   };
 
   // Add mapped variations
