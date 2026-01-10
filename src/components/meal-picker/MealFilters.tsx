@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { CuisineType, MealType, DietType, CUISINE_INFO } from "@/types/recipe";
 import { Badge } from "@/components/ui/Badge";
-import { ChevronDown, ChevronUp, Filter, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Filter, X, Leaf, Drumstick, Egg } from "lucide-react";
 
 interface MealFiltersProps {
   selectedMealType: MealType | "all";
@@ -27,11 +27,35 @@ const MEAL_TYPES: { id: MealType | "all"; label: string }[] = [
   { id: "snack", label: "Snack" },
 ];
 
-const DIET_TYPES: { id: DietType | "all"; label: string; color: string }[] = [
-  { id: "all", label: "All", color: "bg-gray-100 text-gray-700" },
-  { id: "veg", label: "Veg", color: "bg-green-100 text-green-700" },
-  { id: "non-veg", label: "Non-Veg", color: "bg-red-100 text-red-700" },
-  { id: "egg", label: "Egg", color: "bg-yellow-100 text-yellow-700" },
+const DIET_TYPES: { id: DietType | "all"; label: string; icon: React.ReactNode; selectedClass: string; unselectedClass: string }[] = [
+  {
+    id: "all",
+    label: "All",
+    icon: null,
+    selectedClass: "bg-gray-700 text-white dark:bg-gray-600",
+    unselectedClass: "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+  },
+  {
+    id: "veg",
+    label: "Vegetarian",
+    icon: <span className="inline-flex items-center justify-center w-4 h-4 border-2 border-green-600 rounded-sm mr-1.5"><span className="w-2 h-2 bg-green-600 rounded-full"></span></span>,
+    selectedClass: "bg-green-600 text-white border-green-600",
+    unselectedClass: "bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800 hover:bg-green-100 dark:hover:bg-green-900/50"
+  },
+  {
+    id: "non-veg",
+    label: "Non-Veg",
+    icon: <span className="inline-flex items-center justify-center w-4 h-4 border-2 border-red-600 rounded-sm mr-1.5"><span className="w-2 h-2 bg-red-600 rounded-full"></span></span>,
+    selectedClass: "bg-red-600 text-white border-red-600",
+    unselectedClass: "bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900/50"
+  },
+  {
+    id: "egg",
+    label: "Eggetarian",
+    icon: <span className="inline-flex items-center justify-center w-4 h-4 border-2 border-amber-500 rounded-sm mr-1.5"><span className="w-2 h-2 bg-amber-500 rounded-full"></span></span>,
+    selectedClass: "bg-amber-500 text-white border-amber-500",
+    unselectedClass: "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/50"
+  },
 ];
 
 const TIME_OPTIONS = [
@@ -109,6 +133,29 @@ export const MealFilters = ({
         )}
       </div>
 
+      {/* Diet Type - Primary Filter (Prominent) */}
+      <div className="pb-4 border-b border-gray-200 dark:border-gray-700">
+        <label className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 block">
+          Diet Preference
+        </label>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {DIET_TYPES.map((type) => (
+            <button
+              key={type.id}
+              onClick={() => onDietTypeChange(type.id)}
+              className={`flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-semibold transition-all border-2 ${
+                selectedDietType === type.id
+                  ? type.selectedClass
+                  : type.unselectedClass
+              }`}
+            >
+              {type.icon}
+              {type.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Meal Type */}
       <div>
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
@@ -131,31 +178,31 @@ export const MealFilters = ({
         </div>
       </div>
 
-      {/* Diet Type */}
+      {/* Quick Cuisine Filter (Region of Origin) */}
       <div>
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
-          Diet Preference
+          Region
         </label>
         <div className="flex flex-wrap gap-2">
-          {DIET_TYPES.map((type) => (
-            <button
-              key={type.id}
-              onClick={() => onDietTypeChange(type.id)}
-              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                selectedDietType === type.id
-                  ? type.id === "all"
+          {Object.entries(CUISINE_GROUPS).map(([group, cuisines]) => {
+            const allSelected = cuisines.every((c) => selectedCuisines.includes(c));
+            const someSelected = cuisines.some((c) => selectedCuisines.includes(c));
+            return (
+              <button
+                key={group}
+                onClick={() => selectCuisineGroup(cuisines)}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                  allSelected
                     ? "bg-orange-500 text-white"
-                    : type.id === "veg"
-                    ? "bg-green-500 text-white"
-                    : type.id === "non-veg"
-                    ? "bg-red-500 text-white"
-                    : "bg-yellow-500 text-white"
-                  : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-              }`}
-            >
-              {type.label}
-            </button>
-          ))}
+                    : someSelected
+                    ? "bg-orange-200 dark:bg-orange-900/50 text-orange-800 dark:text-orange-200"
+                    : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                }`}
+              >
+                {group}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -172,7 +219,7 @@ export const MealFilters = ({
         ) : (
           <>
             <ChevronDown className="w-4 h-4" />
-            Show advanced filters
+            Show more filters
           </>
         )}
       </button>
