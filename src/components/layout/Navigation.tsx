@@ -23,7 +23,7 @@ export const BottomNavigation = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 safe-area-inset-bottom">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 glass border-t border-[var(--color-light-gray)]/50 safe-area-inset-bottom">
       <div className="flex items-center justify-around px-2 py-2">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -33,24 +33,32 @@ export const BottomNavigation = () => {
               key={item.href}
               href={item.href}
               className={`
-                flex flex-col items-center gap-1 px-3 py-2 rounded-lg
-                transition-all duration-200 min-w-[60px]
+                flex flex-col items-center gap-1 px-3 py-2 rounded-xl
+                transition-all duration-300 min-w-[60px]
                 ${
                   isActive
-                    ? "text-orange-600 dark:text-orange-400"
-                    : "text-gray-500 dark:text-gray-400"
+                    ? "text-[var(--accent-primary)]"
+                    : "text-[var(--foreground-muted)]"
                 }
               `}
             >
               <div
                 className={`
-                  p-1.5 rounded-lg transition-colors
-                  ${isActive ? "bg-orange-100 dark:bg-orange-900/30" : ""}
+                  p-2 rounded-xl transition-all duration-300
+                  ${isActive
+                    ? "bg-[var(--accent-primary)]/15 scale-110"
+                    : "hover:bg-[var(--color-light-gray)]/50"
+                  }
                 `}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className={`w-5 h-5 transition-transform ${isActive ? "scale-105" : ""}`} />
               </div>
-              <span className="text-xs font-medium">{item.label}</span>
+              <span className={`text-xs font-semibold transition-colors ${isActive ? "" : "opacity-70"}`}>
+                {item.label}
+              </span>
+              {isActive && (
+                <span className="absolute -bottom-0.5 w-1 h-1 rounded-full bg-[var(--accent-primary)]" />
+              )}
             </Link>
           );
         })}
@@ -71,19 +79,21 @@ interface BreadcrumbProps {
 
 export const Breadcrumb = ({ items }: BreadcrumbProps) => {
   return (
-    <nav className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+    <nav className="flex items-center gap-2 text-sm text-[var(--foreground-muted)] mb-4">
       {items.map((item, index) => (
         <div key={index} className="flex items-center gap-2">
-          {index > 0 && <span>/</span>}
+          {index > 0 && (
+            <span className="text-[var(--color-light-gray)]">/</span>
+          )}
           {item.href ? (
             <Link
               href={item.href}
-              className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+              className="hover:text-[var(--accent-primary)] transition-colors"
             >
               {item.label}
             </Link>
           ) : (
-            <span className="text-gray-900 dark:text-white font-medium">
+            <span className="text-[var(--foreground)] font-medium">
               {item.label}
             </span>
           )}

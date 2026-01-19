@@ -34,7 +34,11 @@ export type CuisineType =
   | "mediterranean"
   | "american"
   | "middle-eastern"
-  | "continental";
+  | "continental"
+  // European
+  | "german"
+  | "spanish"
+  | "hungarian";
 
 export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
 
@@ -428,5 +432,30 @@ export const CUISINE_INFO: Record<CuisineType, CuisineInfo> = {
     description: "European-style cooking adaptations",
     region: "Europe",
     color: "#718096",
+  },
+  // European Cuisines
+  german: {
+    id: "german",
+    name: "German",
+    nameLocal: "Deutsch",
+    description: "Hearty cuisine with sausages, breads, and rich flavors",
+    region: "Europe",
+    color: "#1A1A1A",
+  },
+  spanish: {
+    id: "spanish",
+    name: "Spanish",
+    nameLocal: "Español",
+    description: "Vibrant tapas, paella, and Mediterranean influences",
+    region: "Europe",
+    color: "#C60B1E",
+  },
+  hungarian: {
+    id: "hungarian",
+    name: "Hungarian",
+    nameLocal: "Magyar",
+    description: "Bold paprika-infused dishes and comfort foods",
+    region: "Europe",
+    color: "#436F4D",
   },
 };

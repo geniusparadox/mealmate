@@ -384,7 +384,7 @@ function getIngredientVariations(ingredient: string): string[] {
     "ridge gourd": ["turai", "heerekai", "peerkankai", "beerakaya"],
     pumpkin: ["kaddu", "kumbalakai", "poosanikai", "gummadikaya", "mathanga"],
     coconut: ["nariyal", "kobbari", "tengai", "thenkai", "thenga"],
-    curry leaves: ["kadi patta", "karibevu", "karuveppilai", "karivepaku", "karivembu"],
+    "curry leaves": ["kadi patta", "karibevu", "karuveppilai", "karivepaku", "karivembu"],
     coriander: ["dhania", "kothamalli", "kothambari", "kottimira", "malli"],
     mint: ["pudina", "pudina ele"],
 

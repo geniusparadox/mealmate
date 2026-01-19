@@ -59,9 +59,9 @@ export const TabList = ({
 }: TabListProps) => {
   const variantStyles = {
     default:
-      "flex gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-lg",
-    pills: "flex gap-2",
-    underline: "flex gap-4 border-b border-gray-200 dark:border-gray-700",
+      "flex gap-1 p-1.5 bg-[var(--background-secondary)] rounded-2xl",
+    pills: "flex gap-2 p-2",
+    underline: "flex gap-6 border-b border-[var(--color-light-gray)]/50 px-2",
   };
 
   return (
@@ -93,31 +93,31 @@ export const Tab = ({
   const isActive = activeTab === id;
 
   const baseStyles =
-    "flex items-center gap-2 font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2";
+    "flex items-center gap-2 font-semibold transition-all duration-300 focus:outline-none focus-ring";
 
   const variantStyles = {
     default: `
-      px-4 py-2 rounded-md text-sm
+      px-5 py-2.5 rounded-xl text-sm
       ${
         isActive
-          ? "bg-white dark:bg-gray-700 text-orange-600 shadow-sm"
-          : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+          ? "bg-[var(--background)] text-[var(--accent-primary)] shadow-premium"
+          : "text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--color-light-gray)]/30"
       }
     `,
     pills: `
-      px-4 py-2 rounded-full text-sm
+      px-5 py-2.5 rounded-xl text-sm
       ${
         isActive
-          ? "bg-orange-500 text-white"
-          : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+          ? "bg-gradient-terracotta text-white shadow-premium"
+          : "bg-[var(--background-secondary)] text-[var(--foreground-muted)] hover:bg-[var(--color-light-gray)] hover:text-[var(--foreground)]"
       }
     `,
     underline: `
-      px-1 py-3 text-sm border-b-2 -mb-px
+      px-1 py-4 text-sm border-b-2 -mb-px
       ${
         isActive
-          ? "border-orange-500 text-orange-600"
-          : "border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300"
+          ? "border-[var(--accent-primary)] text-[var(--accent-primary)]"
+          : "border-transparent text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:border-[var(--color-light-gray)]"
       }
     `,
   };
@@ -137,7 +137,7 @@ export const Tab = ({
         ${className}
       `}
     >
-      {icon}
+      {icon && <span className={isActive ? "text-current" : "opacity-70"}>{icon}</span>}
       {children}
     </button>
   );
@@ -160,7 +160,7 @@ export const TabPanel = ({ id, children, className = "" }: TabPanelProps) => {
       role="tabpanel"
       id={`tabpanel-${id}`}
       aria-labelledby={`tab-${id}`}
-      className={`mt-4 ${className}`}
+      className={`animate-fade-in ${className}`}
     >
       {children}
     </div>

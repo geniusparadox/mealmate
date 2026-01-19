@@ -5,6 +5,7 @@ import northIndianData from "./north-indian.json";
 import indoChineseData from "./indo-chinese.json";
 import asianData from "./asian.json";
 import worldData from "./world-cuisines.json";
+import europeanData from "./european.json";
 
 // Type the imported data
 interface RecipeData {
@@ -18,6 +19,7 @@ const northIndian = northIndianData as RecipeData;
 const indoChinese = indoChineseData as RecipeData;
 const asian = asianData as RecipeData;
 const world = worldData as RecipeData;
+const european = europeanData as RecipeData;
 
 // Combine all recipes
 export const allRecipes: Recipe[] = [
@@ -27,6 +29,7 @@ export const allRecipes: Recipe[] = [
   ...indoChinese.recipes,
   ...asian.recipes,
   ...world.recipes,
+  ...european.recipes,
 ];
 
 // Get recipes by cuisine
@@ -78,6 +81,7 @@ export const northIndianRecipes = northIndian.recipes;
 export const indoChineseRecipes = indoChinese.recipes;
 export const asianRecipes = asian.recipes;
 export const worldRecipes = world.recipes;
+export const europeanRecipes = european.recipes;
 
 // Recipe statistics
 export const recipeStats = {
