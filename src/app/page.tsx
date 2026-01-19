@@ -2,8 +2,9 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { Recipe, CuisineType, MealType, DietType } from "@/types/recipe";
+import { Recipe, CuisineType, MealType, DietType, CUISINE_INFO } from "@/types/recipe";
 import { allRecipes } from "@/data/recipes";
+import Link from "next/link";
 import { SpinnerWheel, MealFilters, SmartSuggestions, IngredientSelector } from "@/components/meal-picker";
 import { SimpleTabs } from "@/components/ui/Tabs";
 import { Card, CardBody } from "@/components/ui/Card";
@@ -111,46 +112,52 @@ export default function HomePage() {
     setSpiceLevelMax(5);
   };
 
-  // Time-based greeting
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return { text: "Good morning", subtext: "Start your day with something delicious", meal: "breakfast" };
-    if (hour < 17) return { text: "Good afternoon", subtext: "Time for a satisfying lunch", meal: "lunch" };
-    if (hour < 21) return { text: "Good evening", subtext: "What&apos;s for dinner tonight?", meal: "dinner" };
-    return { text: "Late night cravings?", subtext: "Find the perfect snack", meal: "snack" };
+  // Welcome message
+  const greeting = {
+    text: "Hello! What should we eat today?",
+    subtext: "Discover delicious recipes from around the world"
   };
 
-  const greeting = getGreeting();
+  // Get cuisine counts
+  const cuisineCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    allRecipes.forEach((recipe) => {
+      counts[recipe.cuisine] = (counts[recipe.cuisine] || 0) + 1;
+    });
+    return counts;
+  }, []);
 
-  // Calculate cuisine stats
-  const cuisineStats = [
+  // Group cuisines by region
+  const cuisineGroups = [
     {
-      label: "Karnataka",
-      count: allRecipes.filter((r) => r.cuisine === "karnataka").length,
-      icon: <Flame className="w-5 h-5" />,
+      name: "South Indian",
+      icon: <Flame className="w-4 h-4" />,
       gradient: "bg-gradient-terracotta",
+      cuisines: ["karnataka", "tamil", "kerala", "andhra", "telangana"] as CuisineType[],
     },
     {
-      label: "South Indian",
-      count: allRecipes.filter((r) =>
-        ["tamil", "kerala", "andhra", "telangana"].includes(r.cuisine)
-      ).length,
-      icon: <Leaf className="w-5 h-5" />,
+      name: "North Indian",
+      icon: <Leaf className="w-4 h-4" />,
       gradient: "bg-gradient-sage",
+      cuisines: ["punjabi", "rajasthani", "gujarati", "maharashtrian", "mughlai", "bengali", "kashmiri", "lucknowi"] as CuisineType[],
     },
     {
-      label: "North Indian",
-      count: allRecipes.filter((r) =>
-        ["punjabi", "rajasthani", "mughlai", "gujarati"].includes(r.cuisine)
-      ).length,
-      icon: <Globe className="w-5 h-5" />,
+      name: "Asian",
+      icon: <Globe className="w-4 h-4" />,
       gradient: "bg-gradient-amber",
+      cuisines: ["indo-chinese", "thai", "japanese", "korean", "vietnamese", "chinese", "indonesian", "malaysian"] as CuisineType[],
     },
     {
-      label: "Quick Meals",
-      count: allRecipes.filter((r) => r.isQuickMeal).length,
-      icon: <Timer className="w-5 h-5" />,
+      name: "European",
+      icon: <UtensilsCrossed className="w-4 h-4" />,
+      gradient: "bg-gradient-to-br from-blue-500 to-indigo-600",
+      cuisines: ["german", "italian", "spanish", "hungarian", "mediterranean", "continental"] as CuisineType[],
+    },
+    {
+      name: "Americas & Middle East",
+      icon: <Timer className="w-4 h-4" />,
       gradient: "bg-gradient-to-br from-emerald-500 to-teal-600",
+      cuisines: ["mexican", "american", "middle-eastern"] as CuisineType[],
     },
   ];
 
@@ -207,25 +214,52 @@ export default function HomePage() {
 
       {/* Main Content */}
       <div className="max-w-5xl mx-auto px-4 -mt-6 relative z-10">
-        {/* Cuisine Stats Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
-          {cuisineStats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className={`
-                ${stat.gradient} rounded-2xl p-4 text-white
-                shadow-premium-lg card-hover cursor-pointer
-                animate-slide-up
-              `}
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="flex items-center gap-2 mb-2 opacity-90">
-                {stat.icon}
-              </div>
-              <div className="text-2xl sm:text-3xl font-bold">{stat.count}</div>
-              <div className="text-sm opacity-90">{stat.label}</div>
-            </div>
-          ))}
+        {/* Cuisine Groups */}
+        <div className="space-y-4 mb-6">
+          {cuisineGroups.map((group, groupIndex) => {
+            const groupTotal = group.cuisines.reduce((sum, c) => sum + (cuisineCounts[c] || 0), 0);
+            if (groupTotal === 0) return null;
+
+            return (
+              <Card key={group.name} className="animate-slide-up overflow-hidden" style={{ animationDelay: `${groupIndex * 50}ms` }}>
+                <div className={`${group.gradient} px-4 py-3 flex items-center justify-between`}>
+                  <div className="flex items-center gap-2 text-white">
+                    {group.icon}
+                    <span className="font-semibold">{group.name}</span>
+                  </div>
+                  <span className="text-white/80 text-sm">{groupTotal} recipes</span>
+                </div>
+                <CardBody className="p-3">
+                  <div className="flex flex-wrap gap-2">
+                    {group.cuisines
+                      .filter((cuisine) => cuisineCounts[cuisine] > 0)
+                      .map((cuisine) => {
+                        const info = CUISINE_INFO[cuisine];
+                        return (
+                          <Link
+                            key={cuisine}
+                            href={`/recipes?cuisine=${cuisine}`}
+                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 hover:scale-105"
+                            style={{
+                              backgroundColor: `${info?.color || "#C4704B"}15`,
+                              color: info?.color || "#C4704B",
+                              border: `1px solid ${info?.color || "#C4704B"}30`,
+                            }}
+                          >
+                            <span
+                              className="w-2 h-2 rounded-full"
+                              style={{ backgroundColor: info?.color || "#C4704B" }}
+                            />
+                            {info?.name || cuisine}
+                            <span className="opacity-60">({cuisineCounts[cuisine]})</span>
+                          </Link>
+                        );
+                      })}
+                  </div>
+                </CardBody>
+              </Card>
+            );
+          })}
         </div>
 
         {/* Filters */}
